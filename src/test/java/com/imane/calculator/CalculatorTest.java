@@ -58,6 +58,17 @@ public class CalculatorTest {
         Set<Integer> expected = Set.of(0); // Ensemble attendu
         assertEquals(expected, Calculator.ensembleChiffres(0));
     }
+
+    @Test
+    void testAddOverflow() {
+        assertThrows(ArithmeticException.class, () -> Calculator.add(Integer.MAX_VALUE, 1),
+                "Résultat de l'addition hors des limites");
+    }
+    @Test
+    void testDivideByZero() {
+        assertThrows(ArithmeticException.class, () -> Calculator.divide(10, 0),
+                "Division par zéro");
+    }
 }
 
 
