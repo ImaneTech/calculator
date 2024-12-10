@@ -6,6 +6,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import static org.junit.jupiter.api.Assertions.*;
+import java.util.Set;
 
 public class CalculatorTest {
     private Calculator calculator;
@@ -37,10 +38,26 @@ public class CalculatorTest {
     void testAddParameterized(int a, int b, int expectedResult) {
         assertEquals(expectedResult, Calculator.add(a, b));
     }
-
-
-
-
+    @Test
+    void testEnsembleChiffresPositiveNumber() {
+        Set<Integer> expected = Set.of(6, 7, 9); // Ensemble attendu
+        assertEquals(expected, Calculator.ensembleChiffres(7679));
+    }
+    @Test
+    void testEnsembleChiffresNegativeNumber() {
+        Set<Integer> expected = Set.of(1); // Ensemble attendu
+        assertEquals(expected, Calculator.ensembleChiffres(-11));
+    }
+    @Test
+    void testEnsembleChiffresSingleDigit() {
+        Set<Integer> expected = Set.of(5); // Ensemble attendu
+        assertEquals(expected, Calculator.ensembleChiffres(5));
+    }
+    @Test
+    void testEnsembleChiffresZero() {
+        Set<Integer> expected = Set.of(0); // Ensemble attendu
+        assertEquals(expected, Calculator.ensembleChiffres(0));
+    }
 }
 
 
