@@ -1,20 +1,30 @@
 plugins {
 	id 'java'
-	id 'idea' // optional (to generate IntelliJ IDEA project files)
+	id 'jacoco' // Ajout du plugin JaCoCo
 }
-
 repositories {
 	mavenCentral()
 }
-
 dependencies {
 	testImplementation(platform('org.junit:junit-bom:5.10.0'))
 	testImplementation('org.junit.jupiter:junit-jupiter')
 }
-
 test {
 	useJUnitPlatform()
 	testLogging {
 		events "passed", "skipped", "failed"
+	}
+	tasks.test {
+		finalizedBy jacocoTestReport // Génération automatique du rapport après les tests
+	}
+}
+jacocoTestReport {
+	dependsOn test // Le rapport dépend de l'exécution des tests
+	reports {
+		xml.required = true // Rapport XML activé
+		html.required = true // Rapport HTML activé
+		html.outputLocation = layout.buildDirectory.dir('reports/jacoco/test') // Dossier par défaut
+		// Exemple de personnalisation de l'emplacement :
+		// html.outputLocation = layout.projectDirectory.dir('custom_reports/jacoco/test')
 	}
 }
